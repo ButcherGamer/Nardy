@@ -195,7 +195,7 @@ public class MainWindow extends JFrame implements ActionListener,
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		setResizable(false);
-		setTitle("BackGammon RUS edition v4.20");
+		setTitle("BackGammon");
 
 		background = new JLabel(new ImageIcon("img/BackGammon.jpg"));
 		background.setBounds(0, 0, 800, 600);
