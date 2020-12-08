@@ -41,10 +41,9 @@ import simpleAI.AI;
 
 /**
  *          GUI Backgammon
- * 
- *          Bundles game logic, user input, ai logic, network connection
- *          together
- * 
+ *
+ * отрисовка головного вікна + ігрова логіка, введення даних гравцем і т.д. і т.п.
+ *
  */
 public class MainWindow extends JFrame implements ActionListener,
 		MouseListener, MouseMotionListener {
