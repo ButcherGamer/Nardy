@@ -1,13 +1,7 @@
 package game;
 
-/**
- * 
- * @author 130017964
- * @version 4.20(release)
- * 
- *          Enumerator to describe move types
- * 
- */
+// енум для перерахування типів данних потрібних нам, в даному випадку типи руху фішки
+
 public enum MoveType {
 	BEAROFF, CAPTURE, NORMAL;
 }

@@ -4,7 +4,7 @@ import javax.swing.SwingUtilities;
 
 import game.Board;
 import gui.MainWindow;
-
+// сосбтвна, точка входу програми, якщо сидиш в IDE - компілиш її і гра працює
 public class Main {
 	public static void main(String[] args) {
 //		Board board = new Board();

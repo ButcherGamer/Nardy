@@ -40,10 +40,7 @@ import server.Server;
 import simpleAI.AI;
 
 /**
- * @author 130017964
- * @version 4.20(release)
- * 
- *          GUI Backgammon Rus 4.20
+ *          GUI Backgammon
  * 
  *          Bundles game logic, user input, ai logic, network connection
  *          together
@@ -88,7 +85,7 @@ public class MainWindow extends JFrame implements ActionListener,
 	private JLayeredPane gamePanel;
 	private JLabel background;
 	private JMenuBar menuBar;
-	private JMenu menuGameTitle, aboutGameTitle;
+	private JMenu menuGameTitle;
 	private JMenuItem newGame, exit, help, test; // TODO remove test
 	private JLabel[] stones;
 	private JLabel[] highLights;
@@ -275,17 +272,12 @@ public class MainWindow extends JFrame implements ActionListener,
 				ActionEvent.ALT_MASK));
 		menuGameTitle.add(test);
 
-		aboutGameTitle = new JMenu("About");
-
 		help = new JMenuItem("Help");
 		help.addActionListener(this);
 		help.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
 				ActionEvent.CTRL_MASK));
-		aboutGameTitle.add(help);
-
 		// adding to menu bar
 		menuBar.add(menuGameTitle);
-		menuBar.add(aboutGameTitle);
 		setJMenuBar(menuBar);
 
 	}
@@ -457,12 +449,7 @@ public class MainWindow extends JFrame implements ActionListener,
 		}
 		// TODO About Window/Help
 		if (e.getSource() == help) {
-			JOptionPane
-					.showMessageDialog(this, "Made by Bato-Bair Tsyrenov\n"
-							+ "Version 4.20\n" + "++Networking enabled++\n"
-							+ "++3 Ai-Levels++", "INFO",
-							JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
-									"img/a.png"));
+			// заглушка, тут має бути опис
 		}
 
 		/**
