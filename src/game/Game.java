@@ -3,9 +3,6 @@ package game;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import server.OpponentMove;
-import AI.AI;
-
 /**
 
  * Text Based version of backgammon
@@ -26,28 +23,7 @@ public class Game {
 		board = new Board();
 	}
 
-	public void play(OpponentMove[] opponentMove) {
-		board.setDices(opponentMove[0].getDiceRoll());
-		board.setPlayers(true);
-		board.searchForValidMoves();
-		movesLeft = board.hasValidMovesLeft();
 
-		for (int j = 0; j < opponentMove.length; j++) {
-			for (int i = 0; i < board.getValidMoves().size(); i++) {
-				if (opponentMove[j].getStartPos() == board.getValidMoves()
-						.get(i).getStartField()) {
-					if (opponentMove[j].getEndPos() == board.getValidMoves()
-							.get(i).getEndField()) {
-						board.move(i);
-					}
-				}
-			}
-		}
-
-		changePlayer();
-		dice.throwDices();
-		board.setDices(dice.getDices());
-	}
 
 	// TODO remove text based interface
 

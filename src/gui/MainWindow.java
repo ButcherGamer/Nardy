@@ -34,10 +34,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import server.BackgammonProtocol;
-import server.OpponentMove;
-import server.Server;
-import simpleAI.AI;
 
 /**
  *          GUI Backgammon
@@ -120,13 +116,6 @@ public class MainWindow extends JFrame implements ActionListener,
 	private Object[] gameTypes = { "Гравець проти гравця" };
 	private String gameType;
 
-	// Client-Server Interactions variables
-	private String serverIP;
-	private String serverPort;
-
-	private boolean networkingEnabled;
-	private Server currentServer;
-
 	private ArrayList<Move> movesMade;
 
 	public boolean myTurnInNetwork;
@@ -134,7 +123,7 @@ public class MainWindow extends JFrame implements ActionListener,
 	public volatile boolean finished;
 
 	// AI
-	private simpleAI.AI simpleAi;
+
 	private boolean aiVShumanMode;
 	private boolean aiStarts;
 
@@ -293,7 +282,6 @@ public class MainWindow extends JFrame implements ActionListener,
 		// by default ai off
 		aiVShumanMode = false;
 		// by default networking of
-		networkingEnabled = false;
 		// nothing done
 		finished = false;
 		// draw stones
@@ -357,14 +345,14 @@ public class MainWindow extends JFrame implements ActionListener,
 			 * changePlayer();
 			 * parseOppMove(BackgammonProtocol.parseInput(currentServer
 			 * .getMoveReceived())); changePlayer(); setUpMove();
-			 * 
+			 *
 			 * } else
 			 */if (aiVShumanMode) {
 
 				System.out.println(aiColor);
 				System.out.println(board.getCurrentPlayer());
 				if (board.getCurrentPlayer() == aiColor) {
-					aiTurn();
+
 				}
 			}
 		}
@@ -396,22 +384,7 @@ public class MainWindow extends JFrame implements ActionListener,
 		changeMoveCondition();
 	}
 
-	private void aiTurn() {
-		while (board.hasValidMovesLeft()) {
-			simpleAi = new AI(board);
-			chosenMove = simpleAi.getChosenMove();
-			board.move(chosenMove);
-			board.searchForValidMoves();
-			isMovesLeft = board.hasValidMovesLeft();
-			changeMoveCondition();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
+
 
 	private void initHighLights() {
 		highLights = new JLabel[Board.TOTAL_NO_OF_FIELDS];
@@ -457,82 +430,6 @@ public class MainWindow extends JFrame implements ActionListener,
 				switch (gameType) {
 				case "Гравець проти гравця":
 					setUpMove();
-					break;
-				case "Local vs AI":
-					setUpMove();
-					aiVShumanMode = true;
-
-					if (!board.getWhoStarts()) {
-						// then ai starts
-						isWhite = false;
-						aiColor = game.Color.GOLD;
-						humanColor = game.Color.SILVER;
-						aiTurn();
-					} else {
-						isWhite = true;
-						aiColor = game.Color.SILVER;
-						humanColor = game.Color.GOLD;
-					}
-					break;
-				case "Server AI":
-					networkingEnabled = true;
-					serverPort = (String) JOptionPane.showInputDialog(this,
-							"Please specify PORT for the server",
-							"Server PORT", JOptionPane.PLAIN_MESSAGE,
-							new ImageIcon("img/a.png"), null, "");
-
-					currentServer = new Server(null, serverPort, true, this);
-
-					break;
-				case "Server Human":
-					networkingEnabled = true;
-					// serverPort = (String) JOptionPane.showInputDialog(this,
-					// "Please specify PORT for the server",
-					// "Server PORT", JOptionPane.PLAIN_MESSAGE,
-					// new ImageIcon("img/a.png"), null, "");
-
-					currentServer = new Server(null, "6789", true, this);
-
-					break;
-				case "Client AI":
-					networkingEnabled = true;
-					serverIP = (String) JOptionPane.showInputDialog(this,
-							"Please enter IP for the server", "Server IP",
-							JOptionPane.PLAIN_MESSAGE, new ImageIcon(
-									"img/a.png"), null, "");
-					serverPort = (String) JOptionPane.showInputDialog(this,
-							"Please enter PORT for the server", "Server PORT",
-							JOptionPane.PLAIN_MESSAGE, new ImageIcon(
-									"img/a.png"), null, "");
-
-					currentServer = new Server(serverIP, serverPort, false,
-							this);
-
-					break;
-				case "Client Human":
-					networkingEnabled = true;
-					// serverIP = (String) JOptionPane.showInputDialog(this,
-					// "Please enter IP for the server", "Server IP",
-					// JOptionPane.PLAIN_MESSAGE, new ImageIcon(
-					// "img/a.png"), null, "");
-					// serverPort = (String) JOptionPane.showInputDialog(this,
-					// "Please enter PORT for the server", "Server PORT",
-					// JOptionPane.PLAIN_MESSAGE, new ImageIcon("a.png"),
-					// null, "");
-
-					currentServer = new Server("127.0.0.1", "6789", false, this);
-
-					while (currentServer.output == null) {
-						// wait for connection
-					}
-
-					if (board.getWhoStarts()){
-						myTurnInNetwork = true;
-						setUpMove();
-					} else {
-						currentServer.sendMsg("pass");
-						myTurnInNetwork = false;
-					}
 					break;
 				default:
 					break;
@@ -812,20 +709,7 @@ public class MainWindow extends JFrame implements ActionListener,
 		locations.put(27, new int[] { 705, 509 });
 	}
 
-	/**
-	 * Parser for network outup
-	 * 
-	 * @param movesMade
-	 *            Arraylist of all moves done during this turn
-	 * @return parsed string to send to server
-	 */
 
-	/**
-	 * Creates pop-up window when someone wins
-	 * 
-	 * @param player
-	 *            player that won
-	 */
 	private void winMessage(String player) {
 		JOptionPane.showMessageDialog(this, player + " виграв",
 				"Кінець гри", JOptionPane.INFORMATION_MESSAGE,
@@ -860,22 +744,7 @@ public class MainWindow extends JFrame implements ActionListener,
 		myTurnInNetwork = b;
 	}
 
-	private void parseOppMove(OpponentMove[] parseInput) {
-		board.setDices(parseInput[0].getDiceRoll());
 
-		for (int i = 0; i < parseInput.length; i++) {
-			board.searchForValidMoves();
-			for (int j = 0; j < board.getValidMoves().size(); j++) {
-				if (board.getValidMoves().get(j).getStartField() == parseInput[j]
-						.getStartPos()
-						&& board.getValidMoves().get(j).getEndField() == parseInput[j]
-								.getEndPos()) {
-					board.move(j);
-					placeStones(board.getAmountArray(), board.getColorArray());
-				}
-			}
-		}
-	}
 
 	private String parseMoveMade(ArrayList<Move> movesMade) {
 		String output = board.getDices()[0] + "-" + board.getDices()[0] + ":";

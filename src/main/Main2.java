@@ -1,6 +1,6 @@
 package main;
 
-import server.Server;
+
 import game.Game;
 import gui.MainWindow;
 
