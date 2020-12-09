@@ -1,17 +1,7 @@
 package game;
 
 /**
- * 
- * @author 130017964
- * @version 4.20(release)
- * 
- *          Class stores move for Backgammon
- * 
- *          stores start position, amount moved, end position
- * 
- *          in special case for bear off move stores amount from dice needed and
- *          actual amount needed to reach bear off
- * 
+ *
  */
 
 public class Move {

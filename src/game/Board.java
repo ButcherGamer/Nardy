@@ -6,18 +6,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 /**
- * 
- * @author 130017964
- * @version 4.20(release)
- * 
- *          Board for the backgammon is represented by two arrays, both of size
- *          28: 24 playable fields, 2 Bar places for each player and 2 bearoff
- *          places for each player. One array keeps color of pieces currently
- *          stored on it and second keeps the amount of pieces stored on the
- *          field. White player moves from start of array indexes to the end,
- *          positive direction and black player moves from the end of arrays
- *          towards negative indexes in order to achieve winning condition
- * 
+
  */
 public class Board implements Cloneable {
 	public static final int WHITEBAR = 0, BLACKBAR = 25, WHITEBEAROF = 26,

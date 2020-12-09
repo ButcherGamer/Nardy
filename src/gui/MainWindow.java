@@ -85,7 +85,7 @@ public class MainWindow extends JFrame implements ActionListener,
 	private JLabel background;
 	private JMenuBar menuBar;
 	private JMenu menuGameTitle;
-	private JMenuItem newGame, exit, help, test; // TODO remove test
+	private JMenuItem newGame, exit; // TODO remove test
 	private JLabel[] stones;
 	private JLabel[] highLights;
 	private Dimension preferredSize;
@@ -117,8 +117,7 @@ public class MainWindow extends JFrame implements ActionListener,
 	 */
 	private final ImageIcon hihjLightImg = new ImageIcon("img/highlight.gif");
 
-	private Object[] gameTypes = { "Local vs Human", "Local vs AI",
-			"Server AI", "Server Human", "Client AI", "Client Human" };
+	private Object[] gameTypes = { "Гравець проти гравця" };
 	private String gameType;
 
 	// Client-Server Interactions variables
@@ -197,6 +196,8 @@ public class MainWindow extends JFrame implements ActionListener,
 		setResizable(false);
 		setTitle("BackGammon");
 
+
+
 		background = new JLabel(new ImageIcon("img/BackGammon.jpg"));
 		background.setBounds(0, 0, 800, 600);
 		// background.setVisible(false);
@@ -251,30 +252,20 @@ public class MainWindow extends JFrame implements ActionListener,
 	private void createMenu() {
 		menuBar = new JMenuBar();
 
-		menuGameTitle = new JMenu("Game");
+		menuGameTitle = new JMenu("Гра");
 
-		newGame = new JMenuItem("New Game");
+		newGame = new JMenuItem("Нова гра");
 		newGame.addActionListener(this);
 		newGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
 				ActionEvent.CTRL_MASK));
 		menuGameTitle.add(newGame);
 
-		exit = new JMenuItem("Exit");
+		exit = new JMenuItem("Вийти");
 		exit.addActionListener(this);
 		exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4,
 				ActionEvent.ALT_MASK));
 		menuGameTitle.add(exit);
 
-		test = new JMenuItem("test");
-		test.addActionListener(this);
-		test.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
-				ActionEvent.ALT_MASK));
-		menuGameTitle.add(test);
-
-		help = new JMenuItem("Help");
-		help.addActionListener(this);
-		help.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
-				ActionEvent.CTRL_MASK));
 		// adding to menu bar
 		menuBar.add(menuGameTitle);
 		setJMenuBar(menuBar);
@@ -328,7 +319,7 @@ public class MainWindow extends JFrame implements ActionListener,
 		// set current player
 		board.setPlayers(isWhite);
 		// UPdating info label
-		whosTurn.setText(board.getCurrentPlayer().toString() + " TURN");
+		whosTurn.setText("хід " + board.getCurrentPlayer().toString());
 		changeMoveCondition();
 	}
 
@@ -345,7 +336,7 @@ public class MainWindow extends JFrame implements ActionListener,
 		// set current player
 		board.setPlayers(isWhite);
 		// UPdating info label
-		whosTurn.setText(board.getCurrentPlayer().toString() + " TURN");
+		whosTurn.setText("хід " + board.getCurrentPlayer().toString());
 		changeMoveCondition();
 	}
 
@@ -447,9 +438,7 @@ public class MainWindow extends JFrame implements ActionListener,
 			System.exit(0);
 		}
 		// TODO About Window/Help
-		if (e.getSource() == help) {
-			// заглушка, тут має бути опис
-		}
+
 
 		/**
 		 * Actual place to start a new game Different options given
@@ -460,13 +449,13 @@ public class MainWindow extends JFrame implements ActionListener,
 			initBackgammon();
 			gameType = null;
 			gameType = (String) JOptionPane.showInputDialog(this,
-					"Please choose game type", "New Game",
+					"", "Нова гра",
 					JOptionPane.PLAIN_MESSAGE, new ImageIcon("img/a.png"),
 					gameTypes, "null");
 
 			if ((gameType != null) && (gameType.length() > 0)) {
 				switch (gameType) {
-				case "Local vs Human":
+				case "Гравець проти гравця":
 					setUpMove();
 					break;
 				case "Local vs AI":
@@ -550,11 +539,6 @@ public class MainWindow extends JFrame implements ActionListener,
 				}
 			}
 		}
-
-		if (e.getSource() == test) {
-			aiTurn();
-		}
-
 	}
 
 	@Override
@@ -843,8 +827,8 @@ public class MainWindow extends JFrame implements ActionListener,
 	 *            player that won
 	 */
 	private void winMessage(String player) {
-		JOptionPane.showMessageDialog(this, player + " player Won",
-				"End Of Game Message", JOptionPane.INFORMATION_MESSAGE,
+		JOptionPane.showMessageDialog(this, player + " виграв",
+				"Кінець гри", JOptionPane.INFORMATION_MESSAGE,
 				new ImageIcon("img/a.png"));
 	}
 

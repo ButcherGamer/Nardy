@@ -7,10 +7,7 @@ import server.OpponentMove;
 import AI.AI;
 
 /**
- * 
- * @author 130017964
- * @version 4.20(release)
- * 
+
  * Text Based version of backgammon
  */
 
